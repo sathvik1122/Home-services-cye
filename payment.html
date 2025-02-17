@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - HomeServices</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --secondary-color: #1e293b;
+            --text-color: #475569;
+            --light-bg: #f8fafc;
+            --white: #ffffff;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+        }
+
+        .payment-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 2fr 3fr;
+            gap: 2rem;
+        }
+
+        .order-summary {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .payment-methods {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .service-details {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .service-price {
+            font-size: 2rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin: 1rem 0;
+        }
+
+        .payment-option {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 2px solid var(--gray-200);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .payment-option:hover {
+            border-color: var(--primary-color);
+        }
+
+        .payment-option.active {
+            border-color: var(--primary-color);
+            background: var(--gray-100);
+        }
+
+        .payment-form {
+            margin-top: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--gray-200);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .card-details {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            text-align: center;
+            width: 100%;
+        }
+
+        .button:hover {
+            background: var(--primary-hover);
+        }
+
+        .qr-code {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .qr-code img {
+            max-width: 200px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .payment-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <div class="order-summary">
+            <h2>Order Summary</h2>
+            <div class="service-details">
+                <h3 id="serviceName">Loading service...</h3>
+                <p id="serviceDescription">Loading description...</p>
+                <div class="service-price">₹<span id="servicePrice">0</span></div>
+            </div>
+            <a href="home.html" class="button" style="background: var(--gray-200); color: var(--text-color);">Back to Services</a>
+        </div>
+
+        <div class="payment-methods">
+            <h2>Select Payment Method</h2>
+            <div class="payment-option" onclick="selectPayment('card')">
+                <h3><i class="fas fa-credit-card"></i> Credit/Debit Card</h3>
+            </div>
+            <div class="payment-option" onclick="selectPayment('paypal')">
+                <h3><i class="fab fa-paypal"></i> PayPal</h3>
+            </div>
+            <div class="payment-option" onclick="selectPayment('razorpay')">
+                <h3><i class="fas fa-money-bill-wave"></i> Razorpay</h3>
+            </div>
+            <div class="payment-option" onclick="selectPayment('qr')">
+                <h3><i class="fas fa-qrcode"></i> QR Code Payment</h3>
+            </div>
+
+            <!-- Card Payment Form -->
+            <div id="cardPayment" class="payment-form" style="display: none;">
+                <div class="form-group">
+                    <label>Card Number</label>
+                    <input type="text" placeholder="1234 5678 9012 3456" maxlength="19">
+                </div>
+                <div class="card-details">
+                    <div class="form-group">
+                        <label>Card Holder</label>
+                        <input type="text" placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label>Expiry</label>
+                        <input type="text" placeholder="MM/YY" maxlength="5">
+                    </div>
+                    <div class="form-group">
+                        <label>CVV</label>
+                        <input type="text" placeholder="123" maxlength="3">
+                    </div>
+                </div>
+                <button class="button" onclick="processPayment()">Pay Now</button>
+            </div>
+
+            <!-- QR Code Section -->
+            <div id="qrPayment" class="payment-form" style="display: none;">
+                <div class="qr-code">
+                    <img src="/api/placeholder/200/200" alt="Payment QR Code">
+                    <p>Scan to pay</p>
+                </div>
+                <button class="button" onclick="processPayment()">Confirm Payment</button>
+            </div>
+
+            <!-- PayPal Section -->
+            <div id="paypalPayment" class="payment-form" style="display: none;">
+                <p>You will be redirected to PayPal to complete your payment.</p>
+                <button class="button" onclick="processPayment()">Continue to PayPal</button>
+            </div>
+
+            <!-- Razorpay Section -->
+            <div id="razorpayPayment" class="payment-form" style="display: none;">
+                <p>You will be redirected to Razorpay to complete your payment.</p>
+                <button class="button" onclick="processPayment()">Continue to Razorpay</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get service details from URL parameters
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const service = urlParams.get('service');
+            const price = urlParams.get('price');
+
+            // Service details mapping
+            const services = {
+                'cleaning': {
+                    name: 'Home Cleaning',
+                    description: 'Professional deep cleaning services for your home'
+                },
+                'plumbing': {
+                    name: 'Plumbing Services',
+                    description: 'Expert plumbing repair and installation'
+                },
+                'electrical': {
+                    name: 'Electrical Work',
+                    description: 'Professional electrical repair and installation'
+                },
+                'painting': {
+                    name: 'Painting Services',
+                    description: 'Transform your space with our expert painters'
+                },
+                'pest': {
+                    name: 'Pest Control',
+                    description: 'Comprehensive pest control solutions'
+                }
+            };
+
+            // Update service details
+            if (service && services[service]) {
+                document.getElementById('serviceName').textContent = services[service].name;
+                document.getElementById('serviceDescription').textContent = services[service].description;
+                document.getElementById('servicePrice').textContent = price || '0';
+            }
+        });
+
+        // Payment method selection
+        function selectPayment(method) {
+            // Hide all payment forms
+            document.getElementById('cardPayment').style.display = 'none';
+            document.getElementById('qrPayment').style.display = 'none';
+            document.getElementById('paypalPayment').style.display = 'none';
+            document.getElementById('razorpayPayment').style.display = 'none';
+
+            // Remove active class from all options
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.classList.remove('active');
+            });
+
+            // Show selected payment form
+            document.getElementById(`${method}Payment`).style.display = 'block';
+            // Add active class to selected option
+            event.currentTarget.classList.add('active');
+        }
+
+        // Process payment
+        function processPayment() {
+            alert('This is a dummy payment process. In a real application, this would process the payment.');
+            window.location.href = 'home.html';
+        }
+    </script>
+</body>
+</html>

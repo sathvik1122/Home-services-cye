@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Services</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --secondary-color: #1e293b;
+            --text-color: #475569;
+            --light-bg: #f8fafc;
+            --white: #ffffff;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            color: var(--secondary-color);
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.75rem;
+            font-weight: 600;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: var(--white);
+            padding: 1.25rem 2rem;
+            box-shadow: var(--shadow-sm);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero-slider {
+            height: 90vh;
+            margin-top: 76px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7));
+        }
+
+        .slide-content {
+            position: relative;
+            color: var(--white);
+            text-align: center;
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .slide-content p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 6rem 2rem;
+            background: var(--white);
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .about-content {
+            padding-right: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
+            background: var(--gray-100);
+            padding: 2rem;
+            border-radius: 1rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+  /* Services Section Styles */
+  .services {
+      padding: 6rem 2rem;
+      background: #f8fafc;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-title h2 {
+      font-size: 2.5rem;
+      color: #1e293b;
+      margin-bottom: 1rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: #2563eb;
+      border-radius: 2px;
+    }
+
+    .section-title p {
+      font-size: 1.1rem;
+      color: #64748b;
+      max-width: 600px;
+      margin: 1rem auto 0;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .service-card {
+      background: #ffffff;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    .service-image {
+      height: 240px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .service-image::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+    }
+
+    .service-content {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .service-content h3 {
+      font-size: 1.5rem;
+      color: #1e293b;
+      margin-bottom: 1rem;
+    }
+
+    .service-content p {
+      color: #64748b;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+      flex-grow: 1;
+    }
+
+    .service-price {
+      color: #2563eb;
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .service-price::before {
+      content: '₹';
+      font-size: 1.25rem;
+      color: #94a3b8;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      margin-top: auto;
+    }
+
+    .button {
+      flex: 1;
+      padding: 0.875rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 500;
+      text-align: center;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .primary {
+      background: #2563eb;
+      color: #ffffff;
+    }
+
+    .primary:hover {
+      background: #1d4ed8;
+    }
+
+    .secondary {
+      background: #f1f5f9;
+      color: #475569;
+    }
+
+    .secondary:hover {
+      background: #e2e8f0;
+    }
+
+    @media (max-width: 768px) {
+      .services {
+        padding: 4rem 1rem;
+      }
+
+      .section-title h2 {
+        font-size: 2rem;
+      }
+
+      .services-grid {
+        gap: 2rem;
+      }
+
+      .service-card {
+        margin: 0 0.5rem;
+      }
+    }
+
+        /* Demo Panel */
+        .demo-panel {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--white);
+            padding: 2.5rem;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .demo-panel.active {
+            transform: translateY(0);
+        }
+
+        .demo-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .demo-video {
+            width: 100%;
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+
+        .demo-info {
+            padding-right: 2rem;
+        }
+
+        .close-demo {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        .close-demo:hover {
+            color: var(--primary-color);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary-color);
+            color: var(--white);
+            padding: 5rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+        }
+
+        .footer-brand {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .brand-name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links h4 {
+            color: var(--white);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links a {
+            color: var(--gray-300);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.75rem;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        /* Buttons */
+        .button {
+            display: inline-block;
+            padding: 0.875rem 1.75rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+        }
+
+        .primary {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .primary:hover {
+            background: var(--primary-hover);
+        }
+
+        .secondary {
+            background: var(--gray-200);
+            color: var(--text-color);
+        }
+
+        .secondary:hover {
+            background: var(--gray-300);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .about-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .about-content {
+                padding-right: 0;
+            }
+
+            .demo-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .service-card {
+                margin: 0 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="nav-container">
+            <div class="logo">HomeServices</div>
+            <nav class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#services">Services</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <div class="user-info">
+                <span class="username" id="userDisplay"></span>
+                <a href="index.html" class="button secondary">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="hero-slider" id="home">
+        <div class="slide active" style="background-image: url('/api/placeholder/1920/1080')">
+            <div class="slide-content">
+                <h1>Professional Home Services</h1>
+                <p>Experience excellence in home maintenance with our expert team</p>
+                <a href="#services" class="button primary">Explore Services</a>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('/api/placeholder/1920/1080')">
+            <div class="slide-content">
+                <h1>Expert Solutions</h1>
+                <p>From repairs to renovations, we've got you covered</p>
+                <a href="#services" class="button primary">View Services</a>
+            </div>
+        </div>
+    </div>
+
+    <section class="about-section" id="about">
+        <div class="about-container">
+            <div class="about-content">
+                <h2>About Us</h2>
+                <p>With over a decade of experience, HomeServices has been the trusted partner for thousands of
+                    homeowners. We pride ourselves on delivering exceptional service quality and customer satisfaction.
+                </p>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">10K+</div>
+                        <div>Happy Customers</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">15+</div>
+                        <div>Years Experience</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">50K+</div>
+                        <div>Projects Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">100%</div>
+                        <div>Satisfaction Rate</div>
+                    </div>
+                </div>
+            </div>
+            <div class="about-image">
+                <img src="/api/placeholder/600/400" alt="About Us" style="width: 100%; border-radius: 10px;">
+            </div>
+        </div>
+    </section>
+    
+    <section class="services" id="services">
+        <div class="section-title">
+          <h2>Our Services</h2>
+          <p>Professional solutions for all your home needs</p>
+        </div>
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-image" style="background-image: url('/api/placeholder/400/240')"></div>
+            <div class="service-content">
+              <h3>Home Cleaning</h3>
+              <p>Professional deep cleaning services for your home</p>
+              <div class="service-price">2,999</div>
+              <div class="button-group">
+                <a href="payment.html?service=cleaning&price=2999" class="button primary">Book Now</a>
+                <button class="button secondary" onclick="openDemo('cleaning')">View Demo</button>
+            </div>
+            </div>
+          </div>
+    
+          <div class="service-card">
+            <div class="service-image" style="background-image: url('/api/placeholder/400/240')"></div>
+            <div class="service-content">
+              <h3>Plumbing Services</h3>
+              <p>Expert plumbing repair and installation</p>
+              <div class="service-price">1,499</div>
+              <div class="button-group">
+                <a href="payment.html?service=plumbing&price=1499" class="button primary">Book Now</a>
+                <button class="button secondary" onclick="openDemo('plumbing')">View Demo</button>
+            </div>
+            </div>
+          </div>
+    
+          <div class="service-card">
+            <div class="service-image" style="background-image: url('/api/placeholder/400/240')"></div>
+            <div class="service-content">
+              <h3>Electrical Work</h3>
+              <p>Professional electrical repair and installation</p>
+              <div class="service-price">1,999</div>
+              <div class="button-group">
+                <a href="payment.html?service=electrical&price=1999" class="button primary">Book Now</a>
+                <button class="button secondary" onclick="openDemo('electrical')">View Demo</button>
+            </div>
+            </div>
+          </div>
+    
+          <div class="service-card">
+            <div class="service-image" style="background-image: url('/api/placeholder/400/240')"></div>
+            <div class="service-content">
+              <h3>Painting Services</h3>
+              <p>Transform your space with our expert painters</p>
+              <div class="service-price">15,999</div>
+              <div class="button-group">
+                <a href="payment.html?service=painting&price=15999" class="button primary">Book Now</a>
+                <button class="button secondary" onclick="openDemo('painting')">View Demo</button>
+            </div>
+            </div>
+          </div>
+    
+          <div class="service-card">
+            <div class="service-image" style="background-image: url('/api/placeholder/400/240')"></div>
+            <div class="service-content">
+              <h3>Pest Control</h3>
+              <p>Comprehensive pest control solutions</p>
+              <div class="service-price">3,499</div>
+              <div class="button-group">
+                <a href="payment.html?service=pest&price=3499" class="button primary">Book Now</a>
+                <button class="button secondary" onclick="openDemo('pest')">View Demo</button>
+            </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    <div class="demo-panel" id="demoPanel">
+        <span class="close-demo" onclick="closeDemo()">&times;</span>
+        <div class="demo-content">
+            <div class="demo-video" id="demoVideo">
+                <!-- Video placeholder -->
+                <img src="/api/placeholder/600/400" alt="Service Demo">
+            </div>
+            <div class="demo-info" id="demoInfo"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="brand-name">HomeServices</div>
+                <p>Your trusted partner for home maintenance</p>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#services">Services</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="footer-links">
+                <h4>Services</h4>
+                <a href="#cleaning">Home Cleaning</a>
+                <a href="#plumbing">Plumbing</a>
+                <a href="#electrical">Electrical</a>
+                <a href="#painting">Painting</a>
+            </div>
+            <div class="footer-links">
+                <h4>Legal</h4>
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Refund Policy</a>
+                <a href="#">Cookie Policy</a>
+            </div>
+            <div class="footer-links">
+                <h4>Contact Us</h4>
+                <a href="tel:+911234567890">+91 123 456 7890</a>
+                <a href="mailto:info@homeservices.com">info@homeservices.com</a>
+                <p>123 Main Street, Mumbai, India</p>
+            </div>
+            <div class="footer-brand">
+                <p>Developed by YourName | © 2025 HomeServices. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Display username from localStorage
+        document.addEventListener('DOMContentLoaded', function () {
+            const userEmail = localStorage.getItem('userEmail');
+            if (userEmail) {
+                document.getElementById('userDisplay').textContent = userEmail;
+            } else {
+                window.location.href = 'index.html';
+            }
+
+            // Initialize hero slider
+            initSlider();
+        });
+
+        // Hero Slider functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function initSlider() {
+            setInterval(() => {
+                nextSlide();
+            }, 5000);
+        }
+
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        // Demo panel functionality
+        function openDemo(service) {
+            const demoPanel = document.getElementById('demoPanel');
+            const demoInfo = document.getElementById('demoInfo');
+            const demoVideo = document.getElementById('demoVideo');
+
+            // Service-specific content
+            const services = {
+                cleaning: {
+                    title: 'Professional Home Cleaning',
+                    description: `Our professional cleaning service includes:
+                        <ul>
+                            <li>Deep cleaning of all rooms</li>
+                            <li>Eco-friendly cleaning products</li>
+                            <li>Trained and verified staff</li>
+                            <li>Kitchen and bathroom sanitization</li>
+                            <li>Floor and carpet cleaning</li>
+                        </ul>
+                        <p class="service-price">Starting at ₹2,999</p>`,
+                    videoUrl: '/api/placeholder/600/400'
+                },
+                plumbing: {
+                    title: 'Expert Plumbing Services',
+                    description: `Our plumbing services include:
+                        <ul>
+                            <li>Leak detection and repair</li>
+                            <li>Pipe installation and replacement</li>
+                            <li>Drainage system maintenance</li>
+                            <li>Water heater services</li>
+                            <li>24/7 emergency support</li>
+                        </ul>
+                        <p class="service-price">Starting at ₹1,499</p>`,
+                    videoUrl: '/api/placeholder/600/400'
+                },
+                electrical: {
+                    title: 'Professional Electrical Services',
+                    description: `Our electrical services include:
+                        <ul>
+                            <li>Wiring installation and repair</li>
+                            <li>Circuit breaker replacement</li>
+                            <li>Lighting installation</li>
+                            <li>Electrical safety inspection</li>
+                            <li>Emergency electrical repairs</li>
+                        </ul>
+                        <p class="service-price">Starting at ₹1,999</p>`,
+                    videoUrl: '/api/placeholder/600/400'
+                },
+                painting: {
+                    title: 'Expert Painting Services',
+                    description: `Our painting services include:
+                        <ul>
+                            <li>Interior and exterior painting</li>
+                            <li>Wall texture and designs</li>
+                            <li>Premium quality paints</li>
+                            <li>Color consultation</li>
+                            <li>Furniture and cabinet painting</li>
+                        </ul>
+                        <p class="service-price">Starting at ₹15,999</p>`,
+                    videoUrl: '/api/placeholder/600/400'
+                },
+                pest: {
+                    title: 'Comprehensive Pest Control',
+                    description: `Our pest control services include:
+                        <ul>
+                            <li>General pest control</li>
+                            <li>Termite treatment</li>
+                            <li>Rodent control</li>
+                            <li>Mosquito fumigation</li>
+                            <li>Preventive treatments</li>
+                        </ul>
+                        <p class="service-price">Starting at ₹3,499</p>`,
+                    videoUrl: '/api/placeholder/600/400'
+                }
+            };
+
+            // Update demo panel content
+            demoInfo.innerHTML = `
+                <h2>${services[service].title}</h2>
+                ${services[service].description}
+                <a href="payment.html" class="button primary">Book Now</a>
+            `;
+
+            demoVideo.innerHTML = `<img src="${services[service].videoUrl}" alt="${services[service].title} Demo">`;
+            demoPanel.classList.add('active');
+        }
+
+        function closeDemo() {
+            document.getElementById('demoPanel').classList.remove('active');
+        }
+
+        // Close demo panel when clicking outside
+        document.addEventListener('click', function (event) {
+            const demoPanel = document.getElementById('demoPanel');
+            if (event.target.classList.contains('demo-panel')) {
+                closeDemo();
+            }
+        });
+    </script>
+</body>
+
+</html>
